@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "ucsd-baseline",
+    "opt": "ucsd-optimized"
+  }
+}
