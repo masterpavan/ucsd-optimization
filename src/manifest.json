@@ -1,0 +1,21 @@
+{
+  "name": "UCSD PWA",
+  "short_name": "ucsdpwa",
+  "lang": "en-US",
+  "start_url": "index.html",
+  "display": "standalone",
+  "theme_color": "#006a96",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "icon.jpg",
+      "sizes": "300x300",
+      "type": "image/jpg"
+    },
+    {
+      "src": "icon.jpg",
+      "sizes": "1000x1000",
+      "type": "image/jpg"
+    }
+  ]
+}

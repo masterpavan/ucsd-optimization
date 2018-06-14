@@ -19,36 +19,121 @@
     <meta content="UCSD" name="SITE">
     <meta content="University of California San Diego" name="PAGETITLE">
     <meta content="The University California, San Diego is one of the world&#39;s leading public research universities, located in beautiful La Jolla, California." name="DESCRIPTION">
-    <link href="http://ucsd.edu/favicon.ico" rel="icon">
+    <link href="assets/favicon.ico" rel="icon">
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="ucsdpwa">
+    <meta name="apple-mobile-web-app-title" content="ucsdpwa">
+    <meta name="theme-color" content="#006a96">
+    <meta name="msapplication-navbutton-color" content="#006a96">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="msapplication-starturl" content="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
-    
-  
 
 
+
+    <script>document.addEventListener("DOMContentLoaded", function () {
+        var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+        var lazyBackgrounds = [].slice.call(document.querySelectorAll(".lazy-background"));
+
+        if ("IntersectionObserver" in window) {
+            let lazyImageObserver = new IntersectionObserver(function (entries, observer) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        let lazyImage = entry.target;
+                        lazyImage.src = lazyImage.dataset.src;
+                        lazyImage.classList.remove("lazy");
+                        lazyImageObserver.unobserve(lazyImage);
+                    }
+                });
+            });
+
+            let lazyBackgroundObserver = new IntersectionObserver(function (entries, observer) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("bgvisible");
+                        lazyBackgroundObserver.unobserve(entry.target);
+                    }
+                });
+            });
+
+            lazyImages.forEach(function (lazyImage) {
+                lazyImageObserver.observe(lazyImage);
+            });
+
+            lazyBackgrounds.forEach(function (lazyBackground) {
+                lazyBackgroundObserver.observe(lazyBackground);
+            });
+
+        } else {
+            // Possibly fall back to a more compatible method here
+        }
+    });</script>
+    <script>
+        // Check that service workers are registered
+        if ('serviceWorker' in navigator) {
+            // Use the window load event to keep the page load performant
+            window.addEventListener('load', () => {
+                navigator.serviceWorker
+                    .register('./service-worker.js')
+                    .then(function () {
+                        console.log("Service Worker Registered");
+                    });
+            });
+        }
+    </script>
 
 
 <!-- Site-specific CSS files -->
-    
-  <link href="./index_files/brix_sans.css" rel="stylesheet" type="text/css">
-  
+    <link rel="preload" href="assets/fonts/bsb-webfont.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="assets/fonts/bsr-webfont.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="assets/fonts/bsbi-webfont.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="assets/fonts/bsi-webfont.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+    <link rel="preload" href="assets/img/logo_UCSD.png" as="image">
+    <link rel="preload" href="assets/vid/vid-poster.p.jpg" as="image">
+
+    <style>
+        @font-face {
+            font-family:'BrixSansBold';font-display:swap;unicode-range:U+000-5FF;src: url('../../fonts/brix_sans/31BA49_1_0.eot');src: url('../../fonts/brix_sans/31BA49_1_0.eot?#iefix') format('embedded-opentype');}
+        @font-face {
+            font-family:'BrixSansBold';font-display:swap;unicode-range:U+000-5FF;src:url(assets/fonts/bsb-webfont.woff2) format('woff2'),url(assets/fonts/bsb-webfont.woff) format('woff'),url(assets/fonts/bsb-webfont.ttf) format('truetype'),url('../../fonts/brix_sans/31BA49_1_0.svg#wf') format('svg');}
+        @font-face {
+            font-family:'BrixSansRegular';font-display:swap;unicode-range:U+000-5FF;src: url('../../fonts/brix_sans/31BA49_2_0.eot');src: url('../../fonts/brix_sans/31BA49_2_0.eot?#iefix') format('embedded-opentype');}
+        @font-face {
+            font-family:'BrixSansRegular';font-display:swap;unicode-range:U+000-5FF;src:url(assets/fonts/bsr-webfont.woff2) format('woff2'),url(assets/fonts/bsr-webfont.woff) format('woff'),url(assets/fonts/bsr-webfont.ttf) format('truetype'),url('../../fonts/brix_sans/31BA49_2_0.svg#wf') format('svg');}
+        @font-face {
+            font-family:'BrixSansBold-Italic';font-display:swap;unicode-range:U+000-5FF;src: url('../../fonts/brix_sans/31BA49_3_0.eot');src: url('../../fonts/brix_sans/31BA49_3_0.eot?#iefix') format('embedded-opentype');}
+        @font-face {
+            font-family:'BrixSansBold-Italic';font-display:swap;unicode-range:U+000-5FF;src:url(assets/fonts/bsbi-webfont.woff2) format('woff2'),url(assets/fonts/bsbi-webfont.woff) format('woff'),url(assets/fonts/bsbi-webfont.ttf) format('truetype'),url('../../fonts/brix_sans/31BA49_3_0.svg#wf') format('svg');}
+        @font-face {
+            font-family:'BrixSansRegular-Italic';font-display:swap;unicode-range:U+000-5FF;src: url('../../fonts/brix_sans/31BA49_5_0.eot');src: url('../../fonts/brix_sans/31BA49_5_0.eot?#iefix') format('embedded-opentype');}
+        @font-face {
+            font-family:'BrixSansRegular-Italic';font-display:swap;unicode-range:U+000-5FF;src:url(assets/fonts/bsi-webfont.woff2) format('woff2'),url(assets/fonts/bsi-webfont.woff) format('woff'),url(assets/fonts/bsi-webfont.ttf) format('truetype'),url('../../fonts/brix_sans/31BA49_5_0.svg#wf') format('svg');}
+    </style>
+
   <!-- CSS complied from style overrides -->
-  <link href="./index_files/styles.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
   
-  <link href="./index_files/custom-img.css" rel="stylesheet">
+  <link href="assets/css/custom-img.css" rel="stylesheet">
   
-  <link href="./index_files/custom.css" rel="stylesheet">
+  <link href="assets/css/custom.css" rel="stylesheet">
 
   <!-- Font Awesome Icons -->
-  <link href="./index_files/font-awesome.css" rel="stylesheet">
+  <link href="assets/css/font-awesome.css" rel="stylesheet">
 
   <!-- Animation -->
-  <link href="./index_files/animate.css" rel="stylesheet">
+  <link href="assets/css/animate.css" rel="stylesheet">
 
   <!-- Slick Slider for custom carousel -->
-  <link href="./index_files/slick.css" rel="stylesheet" type="text/css">
+  <link href="assets/css/slick.css" rel="stylesheet" type="text/css">
   <!--  Slick Slider Theme -->    
-  <link href="./index_files/slick-theme.css" rel="stylesheet" type="text/css">
+  <link href="assets/css/slick-theme.css" rel="stylesheet" type="text/css">
+
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
@@ -56,16 +141,6 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
-
-  
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K826VG"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <script type="text/javascript" async="" src="./index_files/insight.min.js.download"></script><script async="" src="./index_files/analytics.js.download"></script><script async="" src="./index_files/gtm.js.download"></script><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-K826VG');</script>
-   
    
   </head>
 
@@ -82,16 +157,16 @@
 <li><a alt="Link to Faculty and Staff Portal" href="http://blink.ucsd.edu/" data-module="nav">Blink</a></li>
 <li><a alt="Link to A to Z Site Index" href="http://ucsd.edu/about/a-to-z-index/index.html" data-module="nav">A-Z Site Index</a></li>
 </ul>
-<div class="navbar-header"><a aria-label="Navigate Back to Home" class="navbar-brand" href="http://ucsd.edu/index.html" data-module="nav"> <span> <img alt="Brand" src="./index_files/logo_UCSD.png"> </span> </a></div>
+<div class="navbar-header"><a aria-label="Navigate Back to Home" class="navbar-brand" href="http://ucsd.edu/index.html" data-module="nav"> <span> <img alt="Brand" src="assets/img/logo_UCSD.png"> </span> </a></div>
 <form action="http://ucsd.edu/search/index.html" class="navbar-form navbar-right navbar-search no-gutter search-form" id="cse-search-box" method="get" role="search"><label class="radio-inline hidden" for="searchUCSD"> <input checked="checked" id="searchUCSD" name="search-scope" type="radio" value="cascade-cwp"> Search UC San Diego </label> <label class="radio-inline hidden" for="searchFaculty"> <input id="searchFaculty" name="search-scope" type="radio" value="faculty-staff"> Search Faculty/Staff </label>
-<div class="input-group"><input aria-labelledby="Search Box" class="form-control hidden input-search" data-id="inputSearch" id="q" name="search-term" placeholder="Search UC San Diego" type="search" value=""> <input name="site" type="hidden" value="cascade-cwp"> <span class="input-group-btn"> <button class="btn btn-primary search-icon search-expand" id="search-icon-button" onclick="submitForm()" type="button"> <img alt="search-icon" class="img-responsive" src="./index_files/icon_search.png"> </button> </span></div>
-<a class="btn btn-primary navbar-btn hidden-sm" href="https://admissions.universityofcalifornia.edu/applicant/login.htm" data-module="nav"> <span> <img alt="check" src="./index_files/icon_check.png"> </span> Apply Now </a></form></div>
+<div class="input-group"><input aria-labelledby="Search Box" class="form-control hidden input-search" data-id="inputSearch" id="q" name="search-term" placeholder="Search UC San Diego" type="search" value=""> <input name="site" type="hidden" value="cascade-cwp"> <span class="input-group-btn"> <button class="btn btn-primary search-icon search-expand" id="search-icon-button" onclick="submitForm()" type="button"> <img alt="search-icon" class="img-responsive" src="assets/img/icon_search.png"> </button> </span></div>
+<a class="btn btn-primary navbar-btn hidden-sm" href="https://admissions.universityofcalifornia.edu/applicant/login.htm" data-module="nav"> <span> <img alt="check" src="assets/img/icon_check.png"> </span> Apply Now </a></form></div>
 </div>
 <div class="navbar-header"><a aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-grid" data-toggle="collapse" href="http://ucsd.edu/#" data-module="nav"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <!-- mobile search dropdown --> <a class="search-icon search-expand dropdown-toggle visible-xs visible-sm" data-toggle="dropdown" href="http://ucsd.edu/#" data-module="nav"> <span class="search-icon"></span> </a>
 <div class="dropdown-menu dropdown-search"><form action="http://ucsd.edu/search/index.html" class="navbar-form navbar-right navbar-search form-inline mobile-search-form" role="search">
-<div class="input-group nav-search-mobile"><input aria-labelledby="Mobile Search Box" class="form-control input-search" data-id="inputSearchMobile" id="q" name="search-term" placeholder="Search in UC San Diego" type="search"> <input name="site" type="hidden" value="cascade-cwp"> <span class="input-group-btn"> <button class="btn btn-primary search-icon search-expand mobile-search-icon" type="button"> <img alt="search-icon" src="./index_files/icon_search.png"> </button> </span></div>
+<div class="input-group nav-search-mobile"><input aria-labelledby="Mobile Search Box" class="form-control input-search" data-id="inputSearchMobile" id="q" name="search-term" placeholder="Search in UC San Diego" type="search"> <input name="site" type="hidden" value="cascade-cwp"> <span class="input-group-btn"> <button class="btn btn-primary search-icon search-expand mobile-search-icon" type="button"> <img alt="search-icon" src="assets/img/icon_search.png"> </button> </span></div>
 <label class="radio-inline" for="searchUCSDMobile"> <input checked="checked" id="searchUCSDMobile" name="t" onclick="setSearch(&#39;web&#39;)" type="radio" value="web"> Search UC San Diego </label> <label class="radio-inline" for="searchFacultyMobile"> <input id="searchFacultyMobile" name="t" onclick="setSearch(&#39;directory&#39;)" type="radio" value="directory"> Search Faculty/Staff </label></form></div>
-<a aria-label="Navigate back Home" class="navbar-brand visible-xs visible-sm" href="http://ucsd.edu/index.html" data-module="nav"> <span> <img alt="Brand" src="./index_files/logo_UCSD.png"> </span> </a></div>
+<a aria-label="Navigate back Home" class="navbar-brand visible-xs visible-sm" href="http://ucsd.edu/index.html" data-module="nav"> <span> <img alt="Brand" src="assets/img/logo_UCSD.png"> </span> </a></div>
 </div>
 </div>
 <div class="container-fluid nav-wrap">
@@ -99,7 +174,7 @@
 <div class="navbar-collapse collapse" id="navbar-collapse-grid"><!-- standard nav small -->
 <ul class="nav navbar-nav small-nav visible-xs visible-sm">
 <li class="dropdown">
-<div class="btn-group navbar-btn"><a href="http://ucsd.edu/about/index.html" data-module="nav">About</a> <a class="dropdown-toggle" data-toggle="dropdown" href="http://ucsd.edu/#" data-module="nav"> <img alt="arrow" src="./index_files/icon_arrow.png"> </a>
+<div class="btn-group navbar-btn"><a href="http://ucsd.edu/about/index.html" data-module="nav">About</a> <a class="dropdown-toggle" data-toggle="dropdown" href="http://ucsd.edu/#" data-module="nav"> <img alt="arrow" src="assets/img/icon_arrow.png"> </a>
 <ul class="dropdown-menu">
 <li><a href="http://ucsd.edu/about/visiting-tours/index.html" data-module="nav">Visiting &amp; Tours</a></li>
 <li><a href="http://ucsd.edu/timeline/index.html" data-module="nav">History</a></li>
@@ -111,7 +186,7 @@
 </div>
 </li>
 <li>
-<div class="btn-group navbar-btn"><a href="http://ucsd.edu/academics/" data-module="nav">Academics</a> <a class="dropdown-toggle" data-toggle="dropdown" href="http://ucsd.edu/#" data-module="nav"> <img alt="arrow" src="./index_files/icon_arrow.png"> </a>
+<div class="btn-group navbar-btn"><a href="http://ucsd.edu/academics/" data-module="nav">Academics</a> <a class="dropdown-toggle" data-toggle="dropdown" href="http://ucsd.edu/#" data-module="nav"> <img alt="arrow" src="assets/img/icon_arrow.png"> </a>
 <ul class="dropdown-menu">
 <li><a href="http://students.ucsd.edu/" data-module="nav">TritonLink</a></li>
 <li><a href="http://ucsd.edu/academics-detail.html" data-module="nav">Undergraduate Degrees &amp; Programs</a></li>
@@ -125,7 +200,7 @@
 </div>
 </li>
 <li>
-<div class="btn-group navbar-btn"><a href="http://ucsd.edu/admissions-aid/index.html" data-module="nav">Admissions and Aid</a> <a class="dropdown-toggle" data-toggle="dropdown" href="http://ucsd.edu/#" data-module="nav"> <img alt="arrow" src="./index_files/icon_arrow.png"> </a>
+<div class="btn-group navbar-btn"><a href="http://ucsd.edu/admissions-aid/index.html" data-module="nav">Admissions and Aid</a> <a class="dropdown-toggle" data-toggle="dropdown" href="http://ucsd.edu/#" data-module="nav"> <img alt="arrow" src="assets/img/icon_arrow.png"> </a>
 <ul class="dropdown-menu">
 <li><a href="http://admissions.ucsd.edu/freshman/" data-module="nav">Freshman Admissions</a></li>
 <li><a href="http://admissions.ucsd.edu/transfer/" data-module="nav">Transfer Admissions</a></li>
@@ -137,7 +212,7 @@
 </div>
 </li>
 <li>
-<div class="btn-group navbar-btn"><a href="http://ucsd.edu/research-innovation/index.html" data-module="nav">Research and Innovation</a> <a class="dropdown-toggle" data-toggle="dropdown" href="http://ucsd.edu/#" data-module="nav"> <img alt="arrow" src="./index_files/icon_arrow.png"> </a>
+<div class="btn-group navbar-btn"><a href="http://ucsd.edu/research-innovation/index.html" data-module="nav">Research and Innovation</a> <a class="dropdown-toggle" data-toggle="dropdown" href="http://ucsd.edu/#" data-module="nav"> <img alt="arrow" src="assets/img/icon_arrow.png"> </a>
 <ul class="dropdown-menu">
 <li><a href="http://ucsd.edu/research-innovation/research-initiatives.html" data-module="nav">Research Initiatives</a></li>
 <li><a href="http://ucsd.edu/research-innovation/student-opportunities.html" data-module="nav">Student Opportunities</a></li>
@@ -146,7 +221,7 @@
 </div>
 </li>
 <li>
-<div class="btn-group navbar-btn"><a href="http://ucsd.edu/campus-life/index.html" data-module="nav">Campus Life</a> <a class="dropdown-toggle" data-toggle="dropdown" href="http://ucsd.edu/#" data-module="nav"> <img alt="arrow" src="./index_files/icon_arrow.png"> </a>
+<div class="btn-group navbar-btn"><a href="http://ucsd.edu/campus-life/index.html" data-module="nav">Campus Life</a> <a class="dropdown-toggle" data-toggle="dropdown" href="http://ucsd.edu/#" data-module="nav"> <img alt="arrow" src="assets/img/icon_arrow.png"> </a>
 <ul class="dropdown-menu">
 <li><a href="http://ucsd.edu/campus-life/organizations/index.html" data-module="nav">Organizations</a></li>
 <li><a href="http://ucsd.edu/campus-life/diversity/index.html" data-module="nav">Diversity</a></li>
@@ -159,7 +234,7 @@
 </div>
 </li>
 <li>
-<div class="btn-group navbar-btn"><a href="http://ucsd.edu/support/index.html" data-module="nav">Support UC San Diego</a> <a class="dropdown-toggle" data-toggle="dropdown" href="http://ucsd.edu/#" data-module="nav"> <img alt="arrow" src="./index_files/icon_arrow.png"> </a>
+<div class="btn-group navbar-btn"><a href="http://ucsd.edu/support/index.html" data-module="nav">Support UC San Diego</a> <a class="dropdown-toggle" data-toggle="dropdown" href="http://ucsd.edu/#" data-module="nav"> <img alt="arrow" src="assets/img/icon_arrow.png"> </a>
 <ul class="dropdown-menu">
 <li><a href="http://alumni.ucsd.edu/" data-module="nav">Alumni</a></li>
 <li><a href="http://giving.ucsd.edu/" data-module="nav">Giving</a></li>
@@ -260,12 +335,12 @@
 
 
    
-<section class="jumbotron jumbotron-hero jumbotron-hero-lg vid-poster" data-module="hero-homepage">
+<section class="jumbotron jumbotron-hero jumbotron-hero-lg vid-poster lazy-background" data-module="hero-homepage">
   <div class="container">
     <div class="row">
     
-    <video autoplay="" class="visible-md visible-lg fillWidth fadeIn animated vid-poster $BlockVideo" id="video-background" loop="" poster="//ucsd.edu/_resources/vid/vid-poster.jpg">
-          <source src="//ucsd.edu/_resources/vid/ucsd-home.mp4" type="video/mp4">
+    <video autoplay="" class="visible-md visible-lg fillWidth fadeIn animated vid-poster $BlockVideo" id="video-background" loop="" poster="assets/vid/vid-poster.jpg">
+          <source src="assets/vid/ucsd-home.mp4" type="video/mp4">
       </video>
       <div class="col-sm-7 hp-h-col">
         <div class="text-indent text-indent-h1 animated fadeInUp">
@@ -494,7 +569,7 @@
 
 
           
-    <section class="jumbotron jumbotron-callout-sm jumbotron-research" data-module="callout-image-small">
+    <section class="jumbotron jumbotron-callout-sm jumbotron-research lazy-background" data-module="callout-image-small">
       <div class="container">
         <div class="text-indent text-indent-h2">
           <h2>Research and Innovation  </h2>
@@ -509,7 +584,7 @@
                                         
     
     
-    <section class="jumbotron jumbotron-attend" data-module="callout-content-four">
+    <section class="jumbotron jumbotron-attend lazy-background" data-module="callout-content-four">
       <div class="container">
         <div class="text-indent">
         
@@ -580,7 +655,7 @@
 
         
             
-<section class="jumbotron jumbotron-callout-sm jumbotron-campus-life" data-module="callout-image-small-social">
+<section class="jumbotron jumbotron-callout-sm jumbotron-campus-life lazy-background" data-module="callout-image-small-social">
       <div class="container-fluid">
         <div class="row">
           <div class="col-sm-8 campus-life">
@@ -591,7 +666,7 @@
             </div>
           </div>
           <div class="col-sm-4 no-gutter">
-            <div class="instragram-feed">
+            <div class="instragram-feed lazy-background">
             <a alt="UC San Diego&#39;s Official Instagram Page" href="https://www.instagram.com/ucsandiego/" data-h2="our thriving student life" data-module="callout-image-small-social"></a>
             </div>
           </div>
@@ -602,7 +677,7 @@
 
 
 
-<section class="jumbotron jumbotron-map" data-module="book-tour-and-map">
+<section class="jumbotron jumbotron-map lazy-background" data-module="book-tour-and-map">
 	<div class="container">
     	<div class="row">
 			<div class="col-md-5">
@@ -640,7 +715,7 @@
 
 
 
-<section class="jumbotron jumbotron-image-bg jumbotron-callout-sm jumbotron-research campaign-mod" data-module="callout-image-small">
+<section class="jumbotron jumbotron-image-bg jumbotron-callout-sm jumbotron-research campaign-mod lazy-background" data-module="callout-image-small">
   <div class="container">
     <div class="text-indent-h2 col-xs-offset-0 col-sm-offset-3 col-md-offset-6 campaign-nontradition">
       <h2>Continue the <span>non</span>tradition.</h2>
@@ -654,7 +729,7 @@
 
         
         
-        <section class="jumbotron jumbotron-event-multiple" data-module="event-multiple">
+        <section class="jumbotron jumbotron-event-multiple lazy-background" data-module="event-multiple">
       <div class="container">
         <div class="row">
           <div class="col-sm-6">
@@ -702,7 +777,7 @@
        
       <div class="col-sm-4 no-gutter">
         <div class="panel panel-default">
-          <img alt="All Campus Commencement Student Speaker: Speak Your Truth" class="img-responsive" src="./index_files/feature-speaker_homepage.jpg">
+          <img alt="All Campus Commencement Student Speaker: Speak Your Truth" class="img-responsive" src="assets/img/feature-speaker_homepage.jpg">
           <div class="panel-heading">
             <p class="panel-news-date small">June 7,  2018</p>
             <h4 class="panel-news-title">All Campus Commencement Student Speaker: Speak Your Truth</h4>
@@ -716,7 +791,7 @@
        
       <div class="col-sm-4 no-gutter">
         <div class="panel panel-default">
-          <img alt="Live, Learn, Play: Vibrant New Neighborhood to Break Ground on Campus" class="img-responsive" src="./index_files/north-torrey-pines-living-learning-neighborhood-hero_homepage.jpg">
+          <img alt="Live, Learn, Play: Vibrant New Neighborhood to Break Ground on Campus" class="img-responsive" src="assets/img/north-torrey-pines-living-learning-neighborhood-hero_homepage.jpg">
           <div class="panel-heading">
             <p class="panel-news-date small">June 7,  2018</p>
             <h4 class="panel-news-title">Live, Learn, Play: Vibrant New Neighborhood to Break Ground on Campus</h4>
@@ -730,7 +805,7 @@
        
       <div class="col-sm-4 no-gutter">
         <div class="panel panel-default">
-          <img alt="UC San Diego Ranked 3rd Among U.S. Public Universities in High-Quality Research" class="img-responsive" src="./index_files/Research2_homepage.jpg">
+          <img alt="UC San Diego Ranked 3rd Among U.S. Public Universities in High-Quality Research" class="img-responsive" src="assets/img/Research2_homepage.jpg">
           <div class="panel-heading">
             <p class="panel-news-date small">June 7, 2018</p>
             <h4 class="panel-news-title">UC San Diego Ranked 3rd Among U.S. Public Universities in High-Quality Research</h4>
@@ -757,7 +832,7 @@
       <div class="row">
         <div class="col-xs-6 col-sm-3 footer-brand-wrap">
           <a alt="UC San Diego Homepage" class="footer-brand" href="http://ucsd.edu/" data-module="footer">
-            <img alt="Brand" class="img-responsive" src="./index_files/logo_UCSD_white.png">
+            <img alt="Brand" class="img-responsive" src="assets/img/logo_UCSD_white.png">
           </a>
         </div>
         <div class="col-xs-6 col-sm-9 footer-address-wrap no-gutter">
@@ -815,22 +890,22 @@
             <div class="col-xs-6 no-gutter">
               <ul class="list-inline">
                 <li>
-                  <a href="https://www.facebook.com/UCSanDiego/" data-module="footer"><img alt="facebook" src="./index_files/icon_fb.png"></a>
+                  <a href="https://www.facebook.com/UCSanDiego/" data-module="footer"><img alt="facebook" src="assets/img/icon_fb.png"></a>
                 </li>
                 <li>
-                  <a href="https://www.instagram.com/ucsandiego/" data-module="footer"><img alt="instagram" src="./index_files/icon_ig.png"></a>
+                  <a href="https://www.instagram.com/ucsandiego/" data-module="footer"><img alt="instagram" src="assets/img/icon_ig.png"></a>
                 </li>
                 <li>
-                  <a href="https://www.linkedin.com/company/university-of-california-at-san-diego/" data-module="footer"><img alt="linkedin" src="./index_files/icon_linked.png"></a>
+                  <a href="https://www.linkedin.com/company/university-of-california-at-san-diego/" data-module="footer"><img alt="linkedin" src="assets/img/icon_linked.png"></a>
                 </li>
                 <li>
-                  <a href="https://twitter.com/ucsandiego/" data-module="footer"><img alt="twitter" src="./index_files/icon_tw.png"></a>
+                  <a href="https://twitter.com/ucsandiego/" data-module="footer"><img alt="twitter" src="assets/img/icon_tw.png"></a>
                 </li>
               </ul>
             </div>
             <div class="col-xs-6">
               <a alt="apply now" href="https://admissions.universityofcalifornia.edu/applicant/login.htm" data-module="footer">
-                <button class="btn btn-primary btn-apply" type="button"><span><img alt="check" src="./index_files/icon_check.png"></span> Apply Now</button>
+                <button class="btn btn-primary btn-apply" type="button"><span><img alt="check" src="assets/img/icon_check.png"></span> Apply Now</button>
               </a>
             </div>
           </div>
@@ -897,15 +972,15 @@
 </footer>
 
 
-<script src="./index_files/jquery.min.js.download"></script>
- <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> 
-<script src="./index_files/bootstrap.min.js.download"></script>
+<script src="assets/js/jquery.js"></script>
+ <script>window.jQuery || document.write('<script src="assets/js/jquery.js"><\/script>')</script>
+<script src="assets/js/bootstrap.js"></script>
 
 <!-- Slick Slider for custom carousel -->
-<script src="./index_files/slick.min.js.download" type="text/javascript"></script>
+<script src="assets/js/slick.js" type="text/javascript"></script>
 
 
-<script src="./index_files/responsive-tabs.js.download"></script>
+<script src="assets/js/responsive-tabs.js"></script>
 
 <script type="text/javascript">
   (function($) {
@@ -914,13 +989,11 @@
 </script>
 
 <!-- for custom scroll animation -->
-<script src="./index_files/jquery.easings.min.js.download"></script>
+<script src="assets/js/jquery.easings.js"></script>
 
-<script src="./index_files/myscripts.js.download"></script>
+<script src="assets/js/myscripts.js"></script>
 
-<script src="./index_files/message.js.download" type="text/javascript"></script>
-
-
+<script src="assets/js/message.js" type="text/javascript"></script>
 
 
 
@@ -935,40 +1008,11 @@
   })
 </script>
 
-<script src="./index_files/jquery.matchHeight.js.download"></script>
+<script src="assets/js/jquery.matchHeight.js"></script>
 
 <script type="text/javascript">
   $(".panel-body").matchHeight();
 </script>
-
-
-<!-- Site-specific javascript files -->
-    
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-3409104-4', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
-
-<script type="text/javascript">
-_linkedin_data_partner_id = "46649";
-</script><script type="text/javascript">
-(function(){var s = document.getElementsByTagName("script")[0];
-var b = document.createElement("script");
-b.type = "text/javascript";b.async = true;
-b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
-s.parentNode.insertBefore(b, s);})();
-</script>
-<noscript>
-<img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=46649&fmt=gif" />
-</noscript>
-
 
 
   
